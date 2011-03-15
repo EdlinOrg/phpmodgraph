@@ -1,3 +1,3 @@
 To generate the png:
 
-./phpcallgraph -r -f png -o ../examples/example.png ../examples/
+./phpcallgraph -r -f mod -o ../examples/example.png ../examples/
