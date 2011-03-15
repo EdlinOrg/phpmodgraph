@@ -31,7 +31,7 @@ Installation
 2) Test that you can generate a png call graph as described in the documentaion for phpcallgraph
 
 3) Download the phpmodgraph files and place them in the src directory
-   (and thereby replacing the original GraphVizDriver.php)
+   (and thereby replacing the original PHPCallGraphCli.php)
    
 4) Download svnmodfiles.sh
 
@@ -40,15 +40,15 @@ Installation
    
 6) Modify FileModificationHandler.php to have the correct path to the sh file
 
-7) Generate a png call graph again with this modified source
+7) Generate a png call graph again with this modified source, but call it with 'mod' instead of 'png'
 
 8) If the corresponding nodes have not been marked, check in FileModificationHandler.php
    that the filenames in __construct and isMethodChanged are the same
    (e.g. put in the echo statements and verify that they are the same), if not,
    modify extractFileName
 
-If you do a diff of the original GraphVizDriver.php, you will see that I have only modified
-a couple of lines.
+If you have a look at GraphVizMarkModificationsDriver and compare it to its base class methods, you will see that I have only modified
+a couple of lines to mark the nodes.
 
 Todo:
 To get it to mark only the relevant methods/functions (and not all methods in a file), you need to take start/end line number into consideration.
