@@ -67,7 +67,7 @@ class GraphVizMarkModificationsDriver extends GraphVizDriver {
         $color = 'lavender'; //lightblue2, lightsteelblue2, azure2, slategray2
 
       	if($modified){
-      	  $color='green';
+      	  $color='red';
       	}
 
         if (count($nameParts) == 2) { // method call
