@@ -120,7 +120,7 @@ class GraphVizMarkModificationsDriver extends GraphVizDriver {
      * @return void
      */
     protected function initializeNewGraph() {
-        $this->graph = new Image_GraphVizModification(
+        $this->graph = new Image_GraphVizMarkModifications(
             true,
             array(
                 'fontname'  => 'Verdana',
