@@ -25,7 +25,7 @@ class Image_GraphVizMarkModifications extends Image_GraphViz
     /**
      * @var string color that dependent nodes should have
      */
-    private $markDependentNode = 'pink';
+    private $markDependentNode = 'orange';
   
     /**
      * @var string color that marked nodes should have
