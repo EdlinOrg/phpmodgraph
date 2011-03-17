@@ -21,6 +21,7 @@
 
 require_once 'GraphVizDriver.php';
 require_once 'FileModificationHandler.php';
+require_once 'Image/GraphVizMarkModifications.php';
 
 /**
  * Marks the nodes that have been modified
@@ -48,12 +49,12 @@ class GraphVizMarkModificationsDriver extends GraphVizDriver {
         $this->currentCaller = $name;
     }
 
-    /*
-    public function addCall($line, $file, $name) {
-  	    $this->addNode($name, $this->fileModificationHandler->isMethodChanged($file, $name, $line, $line));
-        $this->graph->addEdge(array($this->currentCaller => $name));
+    
+    public function addCall($line, $file, $name) {      
+      $modified = $this->fileModificationHandler->isMethodChanged($file, $name, $line, $line);
+	    $this->addNode($name, $modified);
+      $this->graph->addEdge(array($this->currentCaller => $name));
     }
-    */
     
     /**
      * @param string $name
@@ -67,7 +68,7 @@ class GraphVizMarkModificationsDriver extends GraphVizDriver {
         $color = 'lavender'; //lightblue2, lightsteelblue2, azure2, slategray2
 
       	if($modified){
-      	  $color='red';
+      	  $color=$this->graph->markNode;
       	}
 
         if (count($nameParts) == 2) { // method call
@@ -87,7 +88,8 @@ class GraphVizMarkModificationsDriver extends GraphVizDriver {
                 $cluster = 'internal PHP functions';
             }
         }
-        $this->graph->addNode(
+                
+        $this->graph->addOrMergeNode(
             $name,
             array(
                 'fontname'  => 'Verdana',
@@ -114,5 +116,31 @@ class GraphVizMarkModificationsDriver extends GraphVizDriver {
         //*/
     }
 
+   /**
+     * @return void
+     */
+    protected function initializeNewGraph() {
+        $this->graph = new Image_GraphVizModification(
+            true,
+            array(
+                'fontname'  => 'Verdana',
+                'fontsize'  => 12.0,
+                //'fontcolor' => 'gray5',
+                'rankdir' => 'LR', // left-to-right
+            )
+        );
+        $this->graph->dotCommand = $this->dotCommand;
+    }
+    
+    
+   /**
+     * @return string
+     */
+    public function __toString() {
+      //propagate the impact of marked nodes before returning output
+      $this->graph->traverseAndMarkGraph();
+      return $this->graph->fetch($this->outputFormat);
+    }
+    
 }
 ?>
