@@ -20,7 +20,7 @@
  *
  * @license    http://www.gnu.org/licenses/gpl.txt GNU General Public License
  */
-class Image_GraphVizModification extends Image_GraphViz 
+class Image_GraphVizMarkModifications extends Image_GraphViz 
 {
     /**
      * @var string color that dependent nodes should have
